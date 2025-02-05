@@ -28,8 +28,6 @@ paths:
   /providers/{ukprn}:
     get:
       summary: Returns a paged list of learners for this provider
-      security:
-        - ApiKeyAuth: []  # Require API Key authentication
       parameters:
         - name: ukprn
           in: path
