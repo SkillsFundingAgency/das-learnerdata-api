@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: '1.0'
-  title: ILR inner API
+  title: Learner data inner API
   description: 'A readonly service for consuming the learner data for services on AS'
 paths:
   /providers/{ukprn}/learners/{uln}:
