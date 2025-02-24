@@ -24,47 +24,21 @@ paths:
         '503':
           $ref: '#/components/responses/healthCheckResponse'
 
-  /providers/{ukprn}/learners/{uln}:
+  /learners/{guid}:
     put:
-      summary: Endpoint for updating specific learners. The individual key is combined by ukprn and uln
+      summary: Endpoint for updating specific learners. The individual key is an internal guid created on the POST into our system
       parameters:
-        - name: ukprn
+        - name: guid
           in: path
           required: true
-          description: The UK Provider Reference Number for the provider entering this learner
+          description: A unique
           schema:
             type: string
-        - name: uln
-          in: path
-          required: true
-          description: The Unique Learner Number for this learner
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/createUpdateResponse'
-        '400':
-          $ref: '#/components/responses/badRequest'
-    post:
-      summary: Endpoint for creating an ILR record
-      parameters:
-        - name: ukprn
-          in: path
-          required: true
-          description: The UK Provider Reference Number for the provider entering this learner
-          schema:
-            type: string
-        - name: uln
-          in: path
-          required: true
-          description: The Unique Learner Number for this learner
-          schema:
-            type: string
-      requestBody:
-        $ref: '#/components/requestBodies/learnerRequest'
       responses:
         '201':
           $ref: '#/components/responses/createUpdateResponse'
+        '200':
+            $ref: '#/components/responses/createUpdateResponse'
         '400':
           $ref: '#/components/responses/badRequest'
     get:
@@ -257,6 +231,9 @@ components:
     learner:
       type: object
       properties:
+        id:
+          type: string
+          format: guid
         uln:
           type: integer
         firstName:
@@ -303,4 +280,4 @@ components:
         - epaoPrice
         - startDate
         - plannedEndDate
-        - agreementId
+        - agreementId 
