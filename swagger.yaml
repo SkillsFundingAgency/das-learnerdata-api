@@ -24,21 +24,31 @@ paths:
         '503':
           $ref: '#/components/responses/healthCheckResponse'
 
-  /learners/{guid}:
+  /providers/{ukprn}/academicyears/{academicyear}/learners/{uln}:
     put:
-      summary: Endpoint for updating specific learners. The individual key is an internal guid created on the POST into our system
+      summary: Endpoint for updating specific learners. The individual key is combined by ukprn and uln
       parameters:
-        - name: guid
+        - name: ukprn
           in: path
           required: true
-          description: A unique
+          description: The UK Provider Reference Number for the provider entering this learner
+          schema:
+            type: string
+        - name: academicyear
+          in: path
+          required: true
+          example: 2425
+          schema:
+            type: integer
+        - name: uln
+          in: path
+          required: true
+          description: The Unique Learner Number for this learner
           schema:
             type: string
       responses:
-        '201':
-          $ref: '#/components/responses/createUpdateResponse'
         '200':
-            $ref: '#/components/responses/createUpdateResponse'
+          $ref: '#/components/responses/createUpdateResponse'
         '400':
           $ref: '#/components/responses/badRequest'
     get:
@@ -50,6 +60,12 @@ paths:
           description: The UK Provider Reference Number for the provider entering this learner
           schema:
             type: string
+        - name: academicyear
+          in: path
+          required: true
+          example: 2425
+          schema:
+            type: integer
         - name: uln
           in: path
           required: true
@@ -231,9 +247,6 @@ components:
     learner:
       type: object
       properties:
-        id:
-          type: string
-          format: guid
         uln:
           type: integer
         firstName:
@@ -264,6 +277,8 @@ components:
         startDate:
           type: string
           format: date
+        academicYear:
+          type: integer
         plannedEndDate:
           type: string
           format: date
@@ -280,4 +295,4 @@ components:
         - epaoPrice
         - startDate
         - plannedEndDate
-        - agreementId 
+        - agreementId
