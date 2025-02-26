@@ -24,54 +24,29 @@ paths:
         '503':
           $ref: '#/components/responses/healthCheckResponse'
 
-  /providers/{ukprn}/academicyears/{academicyear}/learners/{uln}:
+  /learners:
     put:
-      summary: Endpoint for updating specific learners. The individual key is combined by ukprn and uln
-      parameters:
-        - name: ukprn
-          in: path
-          required: true
-          description: The UK Provider Reference Number for the provider entering this learner
-          schema:
-            type: string
-        - name: academicyear
-          in: path
-          required: true
-          example: 2425
-          schema:
-            type: integer
-        - name: uln
-          in: path
-          required: true
-          description: The Unique Learner Number for this learner
-          schema:
-            type: string
+      summary: Endpoint for creating specific learners
+      requestBody:
+        $ref: '#/components/requestBodies/learnerRequest'
       responses:
         '200':
           $ref: '#/components/responses/createUpdateResponse'
+        '201':
+          $ref: '#/components/responses/createUpdateResponse'
         '400':
           $ref: '#/components/responses/badRequest'
+  
+  /learners/{guid}:
     get:
-      summary: Returns the unique learner for this provider
+      summary: Returns the unique learner
       parameters:
-        - name: ukprn
+        - name: guid
           in: path
           required: true
-          description: The UK Provider Reference Number for the provider entering this learner
+          description: The guid reference for this learner record. This is an internal id for the service
           schema:
-            type: string
-        - name: academicyear
-          in: path
-          required: true
-          example: 2425
-          schema:
-            type: integer
-        - name: uln
-          in: path
-          required: true
-          description: The Unique Learner Number for this learner
-          schema:
-            type: string
+            type: string        
       responses:
         '200':
           $ref: '#/components/responses/learnerResponse'  
@@ -115,7 +90,7 @@ components:
       schema:
         type: string
         format: url
-        example: /providers/234324/leaners/24321432
+        example: /learners/guid
 
   requestBodies:
     learnerRequest:
@@ -124,7 +99,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/learner'
+            $ref: '#/components/schemas/learnerRequest'
 
   responses:
     pagedLearnersResponse:
@@ -154,7 +129,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/learner'
+            $ref: '#/components/schemas/learnerResponse'
 
     notFound:
       description: The specified resource was not found
@@ -211,7 +186,7 @@ components:
         learners:
           type: array
           items:
-              $ref: '#/components/schemas/learner'
+              $ref: '#/components/schemas/learnerResponse'
         total:
           type: integer
           minimum: 0
@@ -244,7 +219,7 @@ components:
         result: 
           type: string    
     
-    learner:
+    learnerRequest:
       type: object
       properties:
         uln:
@@ -282,17 +257,42 @@ components:
         plannedEndDate:
           type: string
           format: date
+        eventDate:
+          type: string
+          format: date
+          description: The date when the event was raised on the system (effectively the POST date from DC)
       required:
-        - uln,
+        - uln
         - firstName
         - lastName
         - dateOfBirth
         - learnerEmail
-        - ukprn
         - priorLearningPercent
-        - standardCode
+        - ukprn
+        - agreementId
         - trainingPrice
         - epaoPrice
+        - standardCode
         - startDate
+        - academicYear
         - plannedEndDate
-        - agreementId
+        - eventDate
+
+    learnerResponse:
+      allOf:
+        - $ref: "#/components/schemas/learnerRequest"
+        - type: object
+          required:
+            - id
+            - createdDate
+            - updateDate
+          properties:
+            id:
+              type: string
+              format: guid
+            createdDate:
+              type: string
+              format: date
+            updatedDate:
+              type: string
+              format: date
