@@ -126,10 +126,16 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
   
-  /learners/{guid}:
+  /providers/{ukprn}/learners/{guid}:
     get:
       summary: Returns the unique learner
       parameters:
+        - name: ukprn
+          in: path
+          required: true
+          description: The ukprn, ie provider filter
+          schema:
+            type: string 
         - name: guid
           in: path
           required: true
