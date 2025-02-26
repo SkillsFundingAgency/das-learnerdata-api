@@ -24,9 +24,16 @@ paths:
         '503':
           $ref: '#/components/responses/healthCheckResponse'
 
-  /learners:
-    put:
+  /providers/{ukprn}/learners:
+    post:
       summary: Endpoint for creating specific learners
+      parameters:
+        - name: ukprn
+          in: path
+          required: true
+          description: The ukprn, ie provider filter
+          schema:
+            type: string 
       requestBody:
         $ref: '#/components/requestBodies/learnerRequest'
       responses:
@@ -36,6 +43,88 @@ paths:
           $ref: '#/components/responses/createUpdateResponse'
         '400':
           $ref: '#/components/responses/badRequest'
+  
+  /providers/{ukprn}/learners/{uln}/agreements/{agreementId}/academicyears/{academicYear}/standards/{larscode}:
+    put:
+      summary: Endpoint for updating specific learners
+      parameters:
+        - name: ukprn
+          in: path
+          required: true
+          description: The ukprn, ie provider filter
+          schema:
+            type: string 
+        - name: agreementId
+          in: path
+          required: true
+          description: The agreement id
+          schema:
+            type: string        
+        - name: academicYear
+          in: path
+          required: true
+          description: The academic year of this apprenticeship
+          schema:
+            type: integer        
+        - name: uln
+          in: path
+          required: true
+          description: The uln for this learner doing the apprenticeship
+          schema:
+            type: integer 
+        - name: larscode
+          in: path
+          required: true
+          description: The standard being worked on
+          schema:
+            type: integer 
+      requestBody:
+        $ref: '#/components/requestBodies/learnerRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/createUpdateResponse'
+        '201':
+          $ref: '#/components/responses/createUpdateResponse'
+        '400':
+          $ref: '#/components/responses/badRequest'
+    get:
+      summary: Returns the unique learner via the composite index
+      parameters:
+        - name: ukprn
+          in: path
+          required: true
+          description: The ukprn, ie provider filter
+          schema:
+            type: string 
+        - name: agreementId
+          in: path
+          required: true
+          description: The agreement id
+          schema:
+            type: string        
+        - name: academicYear
+          in: path
+          required: true
+          description: The academic year of this apprenticeship
+          schema:
+            type: integer        
+        - name: uln
+          in: path
+          required: true
+          description: The uln for this learner doing the apprenticeship
+          schema:
+            type: integer 
+        - name: larscode
+          in: path
+          required: true
+          description: The standard being worked on
+          schema:
+            type: integer 
+      responses:
+        '200':
+          $ref: '#/components/responses/learnerResponse'  
+        '404':
+          $ref: '#/components/responses/notFound'
   
   /learners/{guid}:
     get:
@@ -52,7 +141,8 @@ paths:
           $ref: '#/components/responses/learnerResponse'  
         '404':
           $ref: '#/components/responses/notFound'
-  /providers/{ukprn}/academicyears/{academicyear}/learners:
+  
+  /providers/{ukprn}/academicyears/{academicYear}/learners:
     get:
       summary: Returns a paged list of learners for this provider for the academic year
       parameters:
@@ -62,7 +152,7 @@ paths:
           description: The UK Provider Reference Number for the provider entering this learner
           schema:
             type: string
-        - name: academicyear
+        - name: academicYear
           in: path
           required: true
           example: 2425
