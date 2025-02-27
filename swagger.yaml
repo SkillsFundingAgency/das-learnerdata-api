@@ -77,6 +77,30 @@ paths:
           description: Default is 20, can be between 10 and 100
           schema:
             type: integer
+        - name: sortColumn
+          in: query
+          required: false
+          description: Default is 20, can be between 10 and 100
+          schema:
+            type: string
+        - name: sortColumn
+          in: query
+          required: false
+          description: The column to sort on, default is surname
+          schema:
+            type: string
+        - name: sortDescending
+          in: query
+          required: false
+          description: Default is ascending
+          schema:
+            type: string
+        - name: filter
+          in: query
+          required: false
+          description: a filter to be used against the ULN or surname
+          schema:
+            type: string
       responses:
         '200':
           $ref: '#/components/responses/pagedLearnersResponse' 
