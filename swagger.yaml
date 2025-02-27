@@ -306,6 +306,11 @@ components:
           type: array
           items:
               $ref: '#/components/schemas/learnerResponse'
+        lastUpdatedDate: 
+          description: This is the latest time that we have had an entry into the system. |
+            This date will be driven from the date the event was received from SLD
+          type: string
+          format: date
         total:
           type: integer
           minimum: 0
