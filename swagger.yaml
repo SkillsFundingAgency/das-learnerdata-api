@@ -381,7 +381,7 @@ components:
         plannedEndDate:
           type: string
           format: date
-        eventDate:
+        submissionDate:
           type: string
           format: date
           description: The date when the event was raised on the system (effectively the POST date from DC)
@@ -400,7 +400,7 @@ components:
         - startDate
         - academicYear
         - plannedEndDate
-        - eventDate
+        - submissionDate
 
     learnerResponse:
       allOf:
