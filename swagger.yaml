@@ -99,7 +99,7 @@ paths:
         '200':
           $ref: '#/components/responses/pagedLearnersResponse' 
   
-  /providers/{ukprn}/learners/{uln}/agreements/{agreementId}/academicyears/{academicYear}/standards/{larscode}:
+  /providers/{ukprn}/learners/{uln}/agreements/{agreementId}/academicyears/{academicYear}:
     put:
       summary: Endpoint for updating specific learners
       parameters:
@@ -125,12 +125,6 @@ paths:
           in: path
           required: true
           description: The uln for this learner doing the apprenticeship
-          schema:
-            type: integer 
-        - name: larscode
-          in: path
-          required: true
-          description: The standard being worked on
           schema:
             type: integer 
       requestBody:
@@ -167,12 +161,6 @@ paths:
           in: path
           required: true
           description: The uln for this learner doing the apprenticeship
-          schema:
-            type: integer 
-        - name: larscode
-          in: path
-          required: true
-          description: The standard being worked on
           schema:
             type: integer 
       responses:
