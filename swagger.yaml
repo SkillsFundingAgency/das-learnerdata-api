@@ -369,6 +369,10 @@ components:
         plannedEndDate:
           type: string
           format: date
+        isFlexiJob: 
+          type: boolean
+        plannedOTJTrainingHours:
+          type: integer
         submissionDate:
           type: string
           format: date
@@ -389,6 +393,8 @@ components:
         - academicYear
         - plannedEndDate
         - submissionDate
+        - plannedOTJTrainingHours
+        - isFlexiJob
 
     learnerResponse:
       allOf:
